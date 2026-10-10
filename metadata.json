@@ -1,0 +1,6 @@
+{
+  "name": "HealthU — AI-Powered Early-Warning System",
+  "description": "AI-Powered Early-Warning System for Disease Risk Detection featuring calibrated risk stratification, TreeSHAP explainability, counterfactual simulations, and longitudinal tracking.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
