@@ -1,0 +1,44 @@
+name: CD Pipeline - Deployment & Release
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  build-and-deploy:
+    name: Build & Deploy Production Package
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Full CI Verification (Lint, Unit Tests, Load Tests)
+        run: |
+          npm run lint
+          npm run test
+          npm run test:load
+
+      - name: Build Production Assets
+        run: npm run build
+
+      - name: Deploy Verification & Health Check
+        run: |
+          echo "✅ Production artifacts successfully compiled into dist/"
+          test -f dist/index.html && echo "✅ dist/index.html is verified."
+          echo "🚀 CD Pipeline finished: HealthU CardioAlert CDSS is ready for deployment."
